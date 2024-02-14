@@ -4,9 +4,10 @@ Intend for internal usage only.
 
 ## Input
 
-| Name          | Description                                             |
-| ------------- |---------------------------------------------------------|
-| `KSM_CONFIG`  | The Keeper Secret Manager configuration                 |
+| Name                     | Description                                             |
+| ------------------------ |---------------------------------------------------------|
+| `keeper-secret-config`   | The Keeper Secret Manager configuration                 |
+| `keeper-jfrog-record-id` | The Keeper record Id for the JFrog credentials          |
 
 ## Example Workflow File
 
@@ -21,5 +22,6 @@ jobs:
           - name: Setup Maven Settings
             uses: bonitasoft/maven-settings-action@TAGNAME
             with:
-              KSM_CONFIG: ${{ secrets.KSM_CONFIG }}
+              keeper-secret-config: ${{ secrets.KSM_CONFIG }}
+              keeper-jfrog-record-id: ${{ vars.KEEPER_JFROG_RECORD_ID }}
 ```

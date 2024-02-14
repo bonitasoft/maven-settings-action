@@ -1,20 +1,23 @@
 name: 'Setup Maven Settings'
 description: 'Configure a settings.xml file with access to Bonitasoft Artifactory'
 inputs:
-  KSM_CONFIG:
+  keeper-secret-config:
     description: 'The Keeper Secret Manager configuration'
+    required: true
+  keeper-jfrog-record-id:
+    description: 'The Keeper record Id for the JFrog credentials'
     required: true
 
 runs:
   using: "composite"
   steps:
     - name: Retrieve Artifactory secrets from Keeper
-        uses: Keeper-Security/ksm-action@master
-        with:
-          keeper-secret-config: ${{ secrets.KSM_CONFIG }}
-          secrets: |
-            ${{ vars.KEEPER_JFROG_RECORD_ID }}/field/login > env:JFROG_USER
-            ${{ vars.KEEPER_JFROG_RECORD_ID }}/field/password > env:JFROG_TOKEN
+      uses: Keeper-Security/ksm-action@master
+      with:
+        keeper-secret-config: ${{ inputs.keeper-secret-config }}
+        secrets: |
+          ${{ inputs.keeper-jfrog-record-id }}/field/login > env:JFROG_USER
+          ${{ inputs.keeper-jfrog-record-id }}/field/password > env:JFROG_TOKEN
     - name: Setup Maven configuration
       uses: whelk-io/maven-settings-xml-action@v22
       with:
