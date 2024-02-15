@@ -4,9 +4,6 @@ inputs:
   keeper-secret-config:
     description: 'The Keeper Secret Manager configuration'
     required: true
-  keeper-jfrog-record-id:
-    description: 'The Keeper record Id for the JFrog credentials'
-    required: true
 
 runs:
   using: "composite"
@@ -16,8 +13,8 @@ runs:
       with:
         keeper-secret-config: ${{ inputs.keeper-secret-config }}
         secrets: |
-          ${{ inputs.keeper-jfrog-record-id }}/field/login > env:JFROG_USER
-          ${{ inputs.keeper-jfrog-record-id }}/field/password > env:JFROG_TOKEN
+          YPOU0laqe0V0mq_qwQ_3wg/field/login > env:JFROG_USER
+          YPOU0laqe0V0mq_qwQ_3wg/field/password > env:JFROG_TOKEN
     - name: Setup Maven configuration
       uses: whelk-io/maven-settings-xml-action@v22
       with:
