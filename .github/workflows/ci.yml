@@ -19,6 +19,12 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository/
+          key: ${{ runner.os }}-maven
+  
       - name: Execute local action
         id: test-action
         uses: ./
