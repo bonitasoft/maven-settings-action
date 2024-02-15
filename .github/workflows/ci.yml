@@ -26,4 +26,4 @@ jobs:
           keeper-secret-config: ${{ secrets.KSM_CONFIG }}
 
       - name: Test maven settings
-        run: mvn help:effective-settings
+        run: mvn dependency:get -Dartifact=com.bonitasoft:bonita-test-toolkit:1.0.2:pom
