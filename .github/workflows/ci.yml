@@ -18,3 +18,12 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
+
+      - name: Execute local action
+        id: test-action
+        uses: ./
+        with:
+          keeper-secret-config: ${{ secrets.KSM_CONFIG }}
+
+      - name: Test maven settings
+        run: mvn help:effective-settings
