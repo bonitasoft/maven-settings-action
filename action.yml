@@ -17,6 +17,8 @@ runs:
         secrets: |
           YPOU0laqe0V0mq_qwQ_3wg/field/login > env:JFROG_USER
           YPOU0laqe0V0mq_qwQ_3wg/field/password > env:JFROG_TOKEN
+          9aU6tget4-Q-1alHvAIp5g/field/login > env:OSSRH_USERNAME
+          9aU6tget4-Q-1alHvAIp5g/field/password > env:OSSRH_PSW
  
     - name: Setup Maven configuration
       uses: whelk-io/maven-settings-xml-action@v22
@@ -104,5 +106,10 @@ runs:
               "id": "snapshots",
               "username": "${{ env.JFROG_USER }}",
               "password": "${{ env.JFROG_TOKEN }}"
+            },
+            {
+              "id": "ossrh",
+              "username": "${{ env.OSSRH_USERNAME }}",
+              "password": "${{ env.OSSRH_PSW }}"
             }
           ]
