@@ -108,6 +108,11 @@ runs:
               "password": "${{ env.JFROG_TOKEN }}"
             },
             {
+              "id": "staging",
+              "username": "${{ env.JFROG_USER }}",
+              "password": "${{ env.JFROG_TOKEN }}"
+            },
+            {
               "id": "ossrh",
               "username": "${{ env.OSSRH_USERNAME }}",
               "password": "${{ env.OSSRH_PSW }}"
