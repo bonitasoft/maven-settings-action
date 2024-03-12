@@ -19,6 +19,7 @@ runs:
           YPOU0laqe0V0mq_qwQ_3wg/field/password > env:JFROG_TOKEN
           9aU6tget4-Q-1alHvAIp5g/field/login > env:OSSRH_USERNAME
           9aU6tget4-Q-1alHvAIp5g/field/password > env:OSSRH_PSW
+          1W-qBXHmaENw-ZmeMzDS4A/field/password > env:GPG_PASSPHRASE
  
     - name: Setup Maven configuration
       uses: whelk-io/maven-settings-xml-action@v22
@@ -116,5 +117,9 @@ runs:
               "id": "ossrh",
               "username": "${{ env.OSSRH_USERNAME }}",
               "password": "${{ env.OSSRH_PSW }}"
+            },
+            {
+              "id" : "gpg.passphrase",
+              "passphrase" : "${{ env.GPG_PASSPHRASE }}"
             }
           ]
