@@ -28,12 +28,17 @@ runs:
         profiles: >
           [ 
             {
-              "id" : "github",
+              "id" : "gpg",
               "properties": {
                 "gpg.keyname": "${{ env.GPG_KEYNAME }}"
               }
             }
           ]
+        active_profiles: >
+         [
+           "gpg",
+           "github"
+         ]
         repositories: >
           [
             {
