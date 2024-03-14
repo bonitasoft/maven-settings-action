@@ -23,13 +23,13 @@ runs:
           1W-qBXHmaENw-ZmeMzDS4A/custom_field/gpg-private-key > env:GPG_PRIVATE_KEY
           1W-qBXHmaENw-ZmeMzDS4A/field/password > env:MAVEN_GPG_PASSPHRASE
 
-     - name: Import GPG key
-       id: import-gpg
-       uses: crazy-max/ghaction-import-gpg@v6
-       with:
-         gpg_private_key: ${{ env.GPG_PRIVATE_KEY }}
-         passphrase: ${{ env.MAVEN_GPG_PASSPHRASE }}
-         fingerprint: ${{ env.GPG_KEYNAME }}
+    - name: Import GPG key
+      id: import-gpg
+      uses: crazy-max/ghaction-import-gpg@v6
+      with:
+        gpg_private_key: ${{ env.GPG_PRIVATE_KEY }}
+        passphrase: ${{ env.MAVEN_GPG_PASSPHRASE }}
+        fingerprint: ${{ env.GPG_KEYNAME }}
  
     - name: Setup Maven configuration
       uses: whelk-io/maven-settings-xml-action@v22
