@@ -82,6 +82,17 @@ runs:
               "snapshots": {
                 "enabled": "true"
               }
+            },
+            {
+              "id": "ext-release-local",
+              "name": "ext-release-local",
+              "url": "https://bonitasoft.jfrog.io/artifactory/ext-release-local",
+              "releases": {
+                "enabled": "true"
+              },
+              "snapshots": {
+                "enabled": "false"
+              }
             }
           ]
         plugin_repositories: >
@@ -141,5 +152,10 @@ runs:
               "id": "ossrh",
               "username": "${{ env.OSSRH_USERNAME }}",
               "password": "${{ env.OSSRH_PSW }}"
+            },
+            {
+              "id": "ext-release-local",
+              "username": "${{ env.JFROG_USER }}",
+              "password": "${{ env.JFROG_TOKEN }}"
             }
           ]
