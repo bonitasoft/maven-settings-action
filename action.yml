@@ -15,8 +15,8 @@ runs:
       with:
         keeper-secret-config: ${{ inputs.keeper-secret-config }}
         secrets: |
-          YPOU0laqe0V0mq_qwQ_3wg/field/login > env:JFROG_USER
-          YPOU0laqe0V0mq_qwQ_3wg/field/password > env:JFROG_TOKEN
+          UMJm296qDNVf1lj83G3Uwg/field/login > env:JFROG_USER
+          UMJm296qDNVf1lj83G3Uwg/field/password > env:JFROG_TOKEN
           9aU6tget4-Q-1alHvAIp5g/field/login > env:OSSRH_USERNAME
           9aU6tget4-Q-1alHvAIp5g/field/password > env:OSSRH_PSW
           1W-qBXHmaENw-ZmeMzDS4A/field/login > env:GPG_KEYNAME
