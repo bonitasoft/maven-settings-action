@@ -17,8 +17,8 @@ runs:
         secrets: |
           UMJm296qDNVf1lj83G3Uwg/field/login > env:JFROG_USER
           UMJm296qDNVf1lj83G3Uwg/field/password > env:JFROG_TOKEN
-          9aU6tget4-Q-1alHvAIp5g/field/login > env:OSSRH_USERNAME
-          9aU6tget4-Q-1alHvAIp5g/field/password > env:OSSRH_PSW
+          VwaCAh2QiR4E4sVaSz_rEQ/field/login > env:CENTRAL_USERNAME
+          VwaCAh2QiR4E4sVaSz_rEQ/field/password > env:CENTRAL_PSW
           1W-qBXHmaENw-ZmeMzDS4A/field/login > env:GPG_KEYNAME
           1W-qBXHmaENw-ZmeMzDS4A/custom_field/gpg-private-key > env:GPG_PRIVATE_KEY
           1W-qBXHmaENw-ZmeMzDS4A/field/password > env:MAVEN_GPG_PASSPHRASE
@@ -73,9 +73,9 @@ runs:
               }
             },
             {
-                "id": "ossrh-snapshots",
-                "name": "ossrh-snapshots",
-                "url" : "https://oss.sonatype.org/content/repositories/snapshots",
+                "id": "central-snapshots",
+                "name": "central-snapshots",
+                "url" : "https://central.sonatype.com/repository/maven-snapshots/",
                 "releases": {
                 "enabled": "false"
               },
@@ -120,14 +120,14 @@ runs:
               }
             },
             {
-                "id": "ossrh-snapshots",
-                "name": "ossrh-snapshots",
-                "url" : "https://oss.sonatype.org/content/repositories/snapshots",
+                "id": "central-snapshots",
+                "name": "central-snapshots",
+                "url" : "https://central.sonatype.com/repository/maven-snapshots/",
                 "releases": {
-                "enabled": "false"
+                  "enabled": "false"
                 },
                 "snapshots": {
-                "enabled": "true"
+                  "enabled": "true"
               }
             }
           ]
@@ -149,9 +149,9 @@ runs:
               "password": "${{ env.JFROG_TOKEN }}"
             },
             {
-              "id": "ossrh",
-              "username": "${{ env.OSSRH_USERNAME }}",
-              "password": "${{ env.OSSRH_PSW }}"
+              "id": "central",
+              "username": "${{ env.CENTRAL_USERNAME }}",
+              "password": "${{ env.CENTRAL_PSW }}"
             },
             {
               "id": "ext-release-local",
