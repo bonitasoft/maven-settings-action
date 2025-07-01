@@ -14,7 +14,7 @@ runs:
       uses: Keeper-Security/ksm-action@v1
       with:
         keeper-secret-config: ${{ inputs.keeper-secret-config }}
-        secrets: |          
+        secrets: |
           UMJm296qDNVf1lj83G3Uwg/field/login > env:JFROG_USER
           UMJm296qDNVf1lj83G3Uwg/field/password > env:JFROG_TOKEN
           9aU6tget4-Q-1alHvAIp5g/field/login > env:CENTRAL_USERNAME
@@ -30,12 +30,12 @@ runs:
         gpg_private_key: ${{ env.GPG_PRIVATE_KEY }}
         passphrase: ${{ env.MAVEN_GPG_PASSPHRASE }}
         fingerprint: ${{ env.GPG_KEYNAME }}
- 
+
     - name: Setup Maven configuration
       uses: whelk-io/maven-settings-xml-action@v22
       with:
         profiles: >
-          [ 
+          [
             {
               "id" : "gpg",
               "properties": {
@@ -44,10 +44,10 @@ runs:
             }
           ]
         active_profiles: >
-         [
-           "gpg",
-           "github"
-         ]
+          [
+            "gpg",
+            "github"
+          ]
         repositories: >
           [
             {
@@ -71,7 +71,7 @@ runs:
               "snapshots": {
                 "enabled": "true"
               }
-            },           
+            },
             {
               "id": "ext-release-local",
               "name": "ext-release-local",
@@ -81,6 +81,17 @@ runs:
               },
               "snapshots": {
                 "enabled": "false"
+              }
+            },
+            {
+              "id": "central-portal-snapshots",
+              "name": "central-portal-snapshots",
+              "url": "https://central.sonatype.com/repository/maven-snapshots/",
+              "releases": {
+                "enabled": "false"
+              },
+              "snapshots": {
+                "enabled": "true"
               }
             }
           ]
@@ -101,6 +112,17 @@ runs:
               "id": "snapshots",
               "name": "snapshots",
               "url": "https://bonitasoft.jfrog.io/artifactory/snapshots",
+              "releases": {
+                "enabled": "false"
+              },
+              "snapshots": {
+                "enabled": "true"
+              }
+            },
+            {
+              "id": "central-portal-snapshots",
+              "name": "central-portal-snapshots",
+              "url": "https://central.sonatype.com/repository/maven-snapshots/",
               "releases": {
                 "enabled": "false"
               },
