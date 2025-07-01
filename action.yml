@@ -14,11 +14,11 @@ runs:
       uses: Keeper-Security/ksm-action@v1
       with:
         keeper-secret-config: ${{ inputs.keeper-secret-config }}
-        secrets: |
+        secrets: |          
           UMJm296qDNVf1lj83G3Uwg/field/login > env:JFROG_USER
           UMJm296qDNVf1lj83G3Uwg/field/password > env:JFROG_TOKEN
-          VwaCAh2QiR4E4sVaSz_rEQ/field/login > env:CENTRAL_USERNAME
-          VwaCAh2QiR4E4sVaSz_rEQ/field/password > env:CENTRAL_PSW
+          9YxF6pdnV9G-rC8m9As56g/field/login > env:CENTRAL_USERNAME
+          9YxF6pdnV9G-rC8m9As56g/field/password > env:CENTRAL_PSW
           1W-qBXHmaENw-ZmeMzDS4A/field/login > env:GPG_KEYNAME
           1W-qBXHmaENw-ZmeMzDS4A/custom_field/gpg-private-key > env:GPG_PRIVATE_KEY
           1W-qBXHmaENw-ZmeMzDS4A/field/password > env:MAVEN_GPG_PASSPHRASE
