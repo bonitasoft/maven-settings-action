@@ -71,18 +71,7 @@ runs:
               "snapshots": {
                 "enabled": "true"
               }
-            },
-            {
-                "id": "central-snapshots",
-                "name": "central-snapshots",
-                "url" : "https://central.sonatype.com/repository/maven-snapshots/",
-                "releases": {
-                "enabled": "false"
-              },
-              "snapshots": {
-                "enabled": "true"
-              }
-            },
+            },           
             {
               "id": "ext-release-local",
               "name": "ext-release-local",
@@ -117,17 +106,6 @@ runs:
               },
               "snapshots": {
                 "enabled": "true"
-              }
-            },
-            {
-                "id": "central-snapshots",
-                "name": "central-snapshots",
-                "url" : "https://central.sonatype.com/repository/maven-snapshots/",
-                "releases": {
-                  "enabled": "false"
-                },
-                "snapshots": {
-                  "enabled": "true"
               }
             }
           ]
