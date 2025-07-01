@@ -17,8 +17,8 @@ runs:
         secrets: |
           UMJm296qDNVf1lj83G3Uwg/field/login > env:JFROG_USER
           UMJm296qDNVf1lj83G3Uwg/field/password > env:JFROG_TOKEN
-          9aU6tget4-Q-1alHvAIp5g/field/login > env:OSSRH_USERNAME
-          9aU6tget4-Q-1alHvAIp5g/field/password > env:OSSRH_PSW
+          9aU6tget4-Q-1alHvAIp5g/field/login > env:CENTRAL_USERNAME
+          9aU6tget4-Q-1alHvAIp5g/field/password > env:CENTRAL_PSW
           1W-qBXHmaENw-ZmeMzDS4A/field/login > env:GPG_KEYNAME
           1W-qBXHmaENw-ZmeMzDS4A/custom_field/gpg-private-key > env:GPG_PRIVATE_KEY
           1W-qBXHmaENw-ZmeMzDS4A/field/password > env:MAVEN_GPG_PASSPHRASE
@@ -30,12 +30,12 @@ runs:
         gpg_private_key: ${{ env.GPG_PRIVATE_KEY }}
         passphrase: ${{ env.MAVEN_GPG_PASSPHRASE }}
         fingerprint: ${{ env.GPG_KEYNAME }}
- 
+
     - name: Setup Maven configuration
       uses: whelk-io/maven-settings-xml-action@v22
       with:
         profiles: >
-          [ 
+          [
             {
               "id" : "gpg",
               "properties": {
@@ -44,10 +44,10 @@ runs:
             }
           ]
         active_profiles: >
-         [
-           "gpg",
-           "github"
-         ]
+          [
+            "gpg",
+            "github"
+          ]
         repositories: >
           [
             {
@@ -73,17 +73,6 @@ runs:
               }
             },
             {
-                "id": "ossrh-snapshots",
-                "name": "ossrh-snapshots",
-                "url" : "https://oss.sonatype.org/content/repositories/snapshots",
-                "releases": {
-                "enabled": "false"
-              },
-              "snapshots": {
-                "enabled": "true"
-              }
-            },
-            {
               "id": "ext-release-local",
               "name": "ext-release-local",
               "url": "https://bonitasoft.jfrog.io/artifactory/ext-release-local",
@@ -92,6 +81,17 @@ runs:
               },
               "snapshots": {
                 "enabled": "false"
+              }
+            },
+            {
+              "id": "central-portal-snapshots",
+              "name": "central-portal-snapshots",
+              "url": "https://central.sonatype.com/repository/maven-snapshots/",
+              "releases": {
+                "enabled": "false"
+              },
+              "snapshots": {
+                "enabled": "true"
               }
             }
           ]
@@ -120,13 +120,13 @@ runs:
               }
             },
             {
-                "id": "ossrh-snapshots",
-                "name": "ossrh-snapshots",
-                "url" : "https://oss.sonatype.org/content/repositories/snapshots",
-                "releases": {
+              "id": "central-portal-snapshots",
+              "name": "central-portal-snapshots",
+              "url": "https://central.sonatype.com/repository/maven-snapshots/",
+              "releases": {
                 "enabled": "false"
-                },
-                "snapshots": {
+              },
+              "snapshots": {
                 "enabled": "true"
               }
             }
@@ -149,9 +149,9 @@ runs:
               "password": "${{ env.JFROG_TOKEN }}"
             },
             {
-              "id": "ossrh",
-              "username": "${{ env.OSSRH_USERNAME }}",
-              "password": "${{ env.OSSRH_PSW }}"
+              "id": "central",
+              "username": "${{ env.CENTRAL_USERNAME }}",
+              "password": "${{ env.CENTRAL_PSW }}"
             },
             {
               "id": "ext-release-local",
