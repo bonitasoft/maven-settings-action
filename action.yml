@@ -131,6 +131,8 @@ runs:
               }
             }
           ]
+        # Github server uses env variables and not github interpolation
+        # Keep this syntax ${} and not ${{}}
         servers: >
           [
             {
