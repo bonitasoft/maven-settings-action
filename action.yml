@@ -157,5 +157,10 @@ runs:
               "id": "ext-release-local",
               "username": "${{ env.JFROG_USER }}",
               "password": "${{ env.JFROG_TOKEN }}"
+            },
+            {
+              "id": "github",
+              "username": "${env.GITHUB_ACTOR}",
+              "password": "${env.GITHUB_TOKEN}"
             }
           ]
