@@ -131,6 +131,8 @@ runs:
               }
             }
           ]
+        # Github server uses env variables and not github interpolation
+        # Keep this syntax ${} and not ${{}}
         servers: >
           [
             {
@@ -157,5 +159,10 @@ runs:
               "id": "ext-release-local",
               "username": "${{ env.JFROG_USER }}",
               "password": "${{ env.JFROG_TOKEN }}"
+            },
+            {
+              "id": "github",
+              "username": "${env.GITHUB_ACTOR}",
+              "password": "${env.GITHUB_TOKEN}"
             }
           ]
