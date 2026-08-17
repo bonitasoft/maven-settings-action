@@ -11,22 +11,20 @@ permissions:
 
 jobs:
   test-action:
-    name: GitHub Actions Test
-    runs-on: ubuntu-latest
+    name: GitHub Action Test
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
-        id: checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Cache Maven
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.m2/repository/
           key: ${{ runner.os }}-maven
   
       - name: Execute local action
-        id: test-action
         uses: ./
         with:
           keeper-secret-config: ${{ secrets.KSM_CONFIG }}
