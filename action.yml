@@ -24,145 +24,24 @@ runs:
           1W-qBXHmaENw-ZmeMzDS4A/field/password > env:MAVEN_GPG_PASSPHRASE
 
     - name: Import GPG key
-      id: import-gpg
       uses: crazy-max/ghaction-import-gpg@v7
       with:
         gpg_private_key: ${{ env.GPG_PRIVATE_KEY }}
         passphrase: ${{ env.MAVEN_GPG_PASSPHRASE }}
         fingerprint: ${{ env.GPG_KEYNAME }}
 
+    # settings.xml holds no credentials: it references ${env.*}, which Maven resolves at
+    # build time from the job environment — populated by the Keeper step above, except
+    # GITHUB_ACTOR (GitHub default variable) and GITHUB_TOKEN (set by the calling workflow).
     - name: Setup Maven configuration
-      uses: whelk-io/maven-settings-xml-action@v22
-      with:
-        profiles: >
-          [
-            {
-              "id" : "gpg",
-              "properties": {
-                "gpg.keyname": "${{ env.GPG_KEYNAME }}"
-              }
-            }
-          ]
-        active_profiles: >
-          [
-            "gpg",
-            "github"
-          ]
-        repositories: >
-          [
-            {
-              "id": "releases",
-              "name": "releases",
-              "url": "https://bonitasoft.jfrog.io/artifactory/releases",
-              "releases": {
-                "enabled": "true"
-              },
-              "snapshots": {
-                "enabled": "false"
-              }
-            },
-            {
-              "id": "snapshots",
-              "name": "snapshots",
-              "url": "https://bonitasoft.jfrog.io/artifactory/snapshots",
-              "releases": {
-                "enabled": "false"
-              },
-              "snapshots": {
-                "enabled": "true"
-              }
-            },
-            {
-              "id": "ext-release-local",
-              "name": "ext-release-local",
-              "url": "https://bonitasoft.jfrog.io/artifactory/ext-release-local",
-              "releases": {
-                "enabled": "true"
-              },
-              "snapshots": {
-                "enabled": "false"
-              }
-            },
-            {
-              "id": "central-portal-snapshots",
-              "name": "central-portal-snapshots",
-              "url": "https://central.sonatype.com/repository/maven-snapshots/",
-              "releases": {
-                "enabled": "false"
-              },
-              "snapshots": {
-                "enabled": "true"
-              }
-            }
-          ]
-        plugin_repositories: >
-          [
-            {
-              "id": "releases",
-              "name": "releases",
-              "url": "https://bonitasoft.jfrog.io/artifactory/releases",
-              "releases": {
-                "enabled": "true"
-              },
-              "snapshots": {
-                "enabled": "false"
-              }
-            },
-            {
-              "id": "snapshots",
-              "name": "snapshots",
-              "url": "https://bonitasoft.jfrog.io/artifactory/snapshots",
-              "releases": {
-                "enabled": "false"
-              },
-              "snapshots": {
-                "enabled": "true"
-              }
-            },
-            {
-              "id": "central-portal-snapshots",
-              "name": "central-portal-snapshots",
-              "url": "https://central.sonatype.com/repository/maven-snapshots/",
-              "releases": {
-                "enabled": "false"
-              },
-              "snapshots": {
-                "enabled": "true"
-              }
-            }
-          ]
-        # Github server uses env variables and not github interpolation
-        # Keep this syntax ${} and not ${{}}
-        servers: >
-          [
-            {
-              "id": "releases",
-              "username": "${{ env.JFROG_USER }}",
-              "password": "${{ env.JFROG_TOKEN }}"
-            },
-            {
-              "id": "snapshots",
-              "username": "${{ env.JFROG_USER }}",
-              "password": "${{ env.JFROG_TOKEN }}"
-            },
-            {
-              "id": "staging",
-              "username": "${{ env.JFROG_USER }}",
-              "password": "${{ env.JFROG_TOKEN }}"
-            },
-            {
-              "id": "central",
-              "username": "${{ env.CENTRAL_USERNAME }}",
-              "password": "${{ env.CENTRAL_PSW }}"
-            },
-            {
-              "id": "ext-release-local",
-              "username": "${{ env.JFROG_USER }}",
-              "password": "${{ env.JFROG_TOKEN }}"
-            },
-            {
-              "id": "github",
-              "username": "${env.GITHUB_ACTOR}",
-              "password": "${env.GITHUB_TOKEN}"
-            }
-          ]
+      shell: bash
+      run: |
+        # the required variables are derived from the file that references them
+        for var in $(grep -oP '\$\{env\.\K[A-Z_]+(?=\})' "$GITHUB_ACTION_PATH/settings.xml" | sort -u | grep -v '^GITHUB_'); do
+          if [[ -z "${!var:-}" ]]; then
+            echo "::error::$var is not set in the job environment, settings.xml would not resolve"
+            exit 1
+          fi
+        done
+        mkdir -p "$HOME/.m2"
+        cp "$GITHUB_ACTION_PATH/settings.xml" "$HOME/.m2/settings.xml"

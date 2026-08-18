@@ -22,7 +22,9 @@ jobs:
         uses: actions/cache@v6
         with:
           path: ~/.m2/repository/
-          key: ${{ runner.os }}-maven
+          key: ${{ runner.os }}-maven-${{ hashFiles('.github/workflows/ci.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
   
       - name: Execute local action
         uses: ./
@@ -31,3 +33,18 @@ jobs:
 
       - name: Test maven settings
         run: mvn dependency:get -Dartifact=com.bonitasoft:bonita-test-toolkit:1.0.2:pom
+
+      # Also asserts that the secrets exported by the action are readable from a step of
+      # the calling workflow, which is what makes the ${env.*} references resolvable.
+      - name: Test gpg.keyname property is resolved
+        run: |
+          if [[ -z "${GPG_KEYNAME:-}" ]]; then
+            echo "::error::GPG_KEYNAME did not reach the calling workflow environment"
+            exit 1
+          fi
+          keyname=$(mvn -q org.apache.maven.plugins:maven-help-plugin:3.5.2:evaluate \
+            -Dexpression=gpg.keyname -DforceStdout)
+          if [[ "$keyname" != "$GPG_KEYNAME" ]]; then
+            echo "::error::gpg.keyname resolved to '$keyname' instead of the imported GPG key"
+            exit 1
+          fi
