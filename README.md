@@ -1,6 +1,6 @@
 # Maven Settings Action
 
-Composite GitHub Action to set up Maven settings with Bonitasoft Artifactory repository.
+Composite GitHub Action to set up Maven settings with the Bonita Artifact Repository.
 Intended for internal usage only.
 
 ## Input
